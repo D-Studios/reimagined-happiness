@@ -1,4 +1,8 @@
 from bcrypt import *
+# from nltk.corpus import words
+import nltk
+import time
+
 
 def main():
     # print("Hello World")
@@ -16,13 +20,20 @@ def main():
     
     # print(hash)
 
+    # nltk.download('words')
+
+    # word_list = words.words()
+
+    # filtered_words = [word for word in word_list if 6<=len(words)<=10]
+
+
     shadow = ""
 
     with open("shadow.txt", "r") as file:
     	shadow = file.readlines()
     for j in range(0, len(shadow)):
 	    shadow_split = shadow[j].split('$')
-	    user = shadow_split[0]
+	    user = shadow[j].split(':')[0]
 	    algorithm = shadow_split[1]
 	    workFactor = shadow_split[2]
 	    saltAndHash = shadow_split[3]
