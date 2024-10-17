@@ -1,4 +1,5 @@
 from bcrypt import *
+import bcrypt
 from nltk.corpus import words
 import nltk
 import time
@@ -33,10 +34,6 @@ def main():
 
     filtered_words = [word[0:len(word)-1] for word in word_list if 6 <= len(word) <= 10]
 
-    print(filtered_words)
-
-    for word in filtered_words:
-    	print(word)
     shadow = ""
     users = []
     forHashPws = []
@@ -69,17 +66,22 @@ def main():
 	    print("salt: ", salt)
 	    print("hash: ", hashValue)
 	    users.append(user)
-	    forHashPws.append(forHashPw)
+	    forHashPws.append(forHashPw.encode('utf-8'))
 	    algorithms.append(algorithm)
 	    workFactors.append(workFactor)
 	    salts.append(salt)
 	    hashes.append(hashValue)
 
-    print(users)
-    print(forHashPws)
-    print(algorithms)
-    print(workFactors)
-    print(salts)
-    print(hashes)
+    print("\n\n\n\n")
+    print("--------------------")
+    start_time = time.time()    
+    for word in filtered_words :
+    	wordBytes = word.encode('utf-8')
+    	hashed_word = bcrypt.hashpw(wordBytes, forHashPws[0])
+    	if bcrypt.checkpw(wordBytes, hashed_word):
+    		elapsed_time = time.time() - start_time
+    		print(f"User: {user}, Password: {word}, Time taken: {elapsed_time:.4f} seconds (checkpw)")
+    		break
+    print("--------------------")
 
 main()
