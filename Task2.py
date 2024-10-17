@@ -1,5 +1,5 @@
 from bcrypt import *
-# from nltk.corpus import words
+from nltk.corpus import words
 import nltk
 import time
 
@@ -21,6 +21,7 @@ def main():
     # print(hash)
 
     # nltk.download('words')
+    # print(words.words())
 
     # word_list = words.words()
 
@@ -28,12 +29,21 @@ def main():
 
 
     shadow = ""
+    users = []
+    forHashPws = []
+    algorithms = []
+    workFactors = []
+    salts = []
+    hashes = []
+
 
     with open("shadow.txt", "r") as file:
     	shadow = file.readlines()
     for j in range(0, len(shadow)):
 	    shadow_split = shadow[j].split('$')
-	    user = shadow[j].split(':')[0]
+	    shadow_split2 = shadow[j].split(":")
+	    user = shadow_split2[0]
+	    forHashPw = shadow_split2[1]
 	    algorithm = shadow_split[1]
 	    workFactor = shadow_split[2]
 	    saltAndHash = shadow_split[3]
@@ -44,10 +54,23 @@ def main():
 	    for i in range(22, len(saltAndHash)):
 	    	hashValue+=saltAndHash[i]
 	    print("User : ", user)
+	    print("forHashPws : ", forHashPw)
 	    print("algorithm : ", algorithm)
 	    print("workFactor : ", workFactor)
 	    print("salt: ", salt)
 	    print("hash: ", hashValue)
+	    users.append(user)
+	    forHashPws.append(forHashPw)
+	    algorithms.append(algorithm)
+	    workFactors.append(workFactor)
+	    salts.append(salt)
+	    hashes.append(hashValue)
 
+    print(users)
+    print(forHashPws)
+    print(algorithms)
+    print(workFactors)
+    print(salts)
+    print(hashes)
 
 main()
