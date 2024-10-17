@@ -33,6 +33,7 @@ def main():
     	word_list = file.readlines()
 
     filtered_words = [word[0:len(word)-1] for word in word_list if 6 <= len(word) <= 10]
+    print(len(filtered_words))
 
     shadow = ""
     users = []
@@ -79,7 +80,7 @@ def main():
     print(forHashPws)
     print(hashDict)
 
-    howMany = 10
+    howMany = 1
 
     print("\n\n\n\n")
     print("--------------------")
@@ -87,6 +88,7 @@ def main():
     for user, hash_value in hashDict.items():
 	    start_time = time.time()    
 	    for word in filtered_words :
+	    	print(word)
 	    	wordBytes = word.encode('utf-8')
 	    	hashed_word = bcrypt.hashpw(wordBytes, hash_value[0:29])
 	    	if bcrypt.checkpw(wordBytes, hash_value):
@@ -95,7 +97,7 @@ def main():
 	    		break
 	    print("--------------------")
 	    currentPerson += 1
-	    if currentPerson > howMany:
+	    if currentPerson >= howMany:
 	    	break
 
 
