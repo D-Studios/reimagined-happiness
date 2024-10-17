@@ -4,6 +4,9 @@ import nltk
 import time
 
 
+def downloadNLTK():
+	nltk.download()
+
 def main():
     # print("Hello World")
     # # example password 
@@ -73,4 +76,6 @@ def main():
     print(salts)
     print(hashes)
 
-main()
+# main()
+
+downloadNLTK()
