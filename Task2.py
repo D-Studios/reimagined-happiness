@@ -4,9 +4,6 @@ import nltk
 import time
 
 
-def downloadNLTK():
-	nltk.download()
-
 def main():
     # print("Hello World")
     # # example password 
@@ -31,6 +28,15 @@ def main():
     # filtered_words = [word for word in word_list if 6<=len(words)<=10]
 
 
+    with open("en.txt", "r") as file:
+    	word_list = file.readlines()
+
+    filtered_words = [word[0:len(word)-1] for word in word_list if 6 <= len(word) <= 10]
+
+    print(filtered_words)
+
+    for word in filtered_words:
+    	print(word)
     shadow = ""
     users = []
     forHashPws = []
@@ -76,6 +82,4 @@ def main():
     print(salts)
     print(hashes)
 
-# main()
-
-downloadNLTK()
+main()
