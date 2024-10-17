@@ -1,4 +1,4 @@
-# from bcrypt import *
+from bcrypt import *
 
 def main():
     # print("Hello World")
