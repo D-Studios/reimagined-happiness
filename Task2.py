@@ -41,6 +41,7 @@ def main():
     workFactors = []
     salts = []
     hashes = []
+    hashDict = {}
 
 
     with open("shadow.txt", "r") as file:
@@ -49,7 +50,7 @@ def main():
 	    shadow_split = shadow[j].split('$')
 	    shadow_split2 = shadow[j].split(":")
 	    user = shadow_split2[0]
-	    forHashPw = shadow_split2[1]
+	    forHashPw = shadow_split2[1][0:len(shadow_split2[1])-1]
 	    algorithm = shadow_split[1]
 	    workFactor = shadow_split[2]
 	    saltAndHash = shadow_split[3]
@@ -57,7 +58,7 @@ def main():
 	    hashValue = ""
 	    for i in range(0, 22):
 	    	salt+=saltAndHash[i]
-	    for i in range(22, len(saltAndHash)):
+	    for i in range(22, len(saltAndHash)-1):
 	    	hashValue+=saltAndHash[i]
 	    print("User : ", user)
 	    print("forHashPws : ", forHashPw)
@@ -71,17 +72,31 @@ def main():
 	    workFactors.append(workFactor)
 	    salts.append(salt)
 	    hashes.append(hashValue)
+	    hashDict[user] = forHashPw.encode('utf-8')
+
+
+    print(users)
+    print(forHashPws)
+
+    howMany = 10
 
     print("\n\n\n\n")
     print("--------------------")
-    start_time = time.time()    
-    for word in filtered_words :
-    	wordBytes = word.encode('utf-8')
-    	hashed_word = bcrypt.hashpw(wordBytes, forHashPws[0])
-    	if bcrypt.checkpw(wordBytes, hashed_word):
-    		elapsed_time = time.time() - start_time
-    		print(f"User: {user}, Password: {word}, Time taken: {elapsed_time:.4f} seconds (checkpw)")
-    		break
-    print("--------------------")
+    currentPerson = 0
+    for user, hash_value in hashDict.items():
+	    start_time = time.time()    
+	    for word in filtered_words :
+	    	wordBytes = word.encode('utf-8')
+	    	hashed_word = bcrypt.hashpw(wordBytes, hash_value)
+	    	if bcrypt.checkpw(wordBytes, hashed_word):
+	    		elapsed_time = time.time() - start_time
+	    		print(f"User: {user}, Password: {word}, Time taken: {elapsed_time:.4f} seconds (checkpw)")
+	    		break
+	    print("--------------------")
+	    currentPerson += 1
+	    if currentPerson > howMany:
+	    	break
+
+
 
 main()
