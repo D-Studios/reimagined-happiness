@@ -50,7 +50,7 @@ def main():
 	    shadow_split = shadow[j].split('$')
 	    shadow_split2 = shadow[j].split(":")
 	    user = shadow_split2[0]
-	    forHashPw = shadow_split2[1][0:len(shadow_split2[1])-1]
+	    forHashPw = shadow_split2[1]
 	    algorithm = shadow_split[1]
 	    workFactor = shadow_split[2]
 	    saltAndHash = shadow_split[3]
@@ -77,6 +77,7 @@ def main():
 
     print(users)
     print(forHashPws)
+    print(hashDict)
 
     howMany = 10
 
@@ -87,8 +88,8 @@ def main():
 	    start_time = time.time()    
 	    for word in filtered_words :
 	    	wordBytes = word.encode('utf-8')
-	    	hashed_word = bcrypt.hashpw(wordBytes, hash_value)
-	    	if bcrypt.checkpw(wordBytes, hashed_word):
+	    	hashed_word = bcrypt.hashpw(wordBytes, hash_value[0:29])
+	    	if bcrypt.checkpw(wordBytes, hash_value):
 	    		elapsed_time = time.time() - start_time
 	    		print(f"User: {user}, Password: {word}, Time taken: {elapsed_time:.4f} seconds (checkpw)")
 	    		break
