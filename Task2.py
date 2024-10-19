@@ -80,11 +80,9 @@ def main():
     print(forHashPws)
     print(hashDict)
 
-    howMany = 1
 
     print("\n\n\n\n")
     print("--------------------")
-    currentPerson = 0
     for user, hash_value in hashDict.items():
 	    start_time = time.time()    
 	    for word in filtered_words :
@@ -93,12 +91,12 @@ def main():
 	    	hashed_word = bcrypt.hashpw(wordBytes, hash_value[0:29])
 	    	if bcrypt.checkpw(hashed_word, hash_value):
 	    		elapsed_time = time.time() - start_time
-	    		print(f"User: {user}, Password: {word}, Time taken: {elapsed_time:.4f} seconds (checkpw)")
+	    		result = f"User: {user}, Password: {word}, Time taken: {elapsed_time:.4f} seconds (checkpw)"
+	    		print(result)
+	    		with open('results.txt', 'a') as file:
+	    			file.write(result)
 	    		break
 	    print("--------------------")
-	    currentPerson += 1
-	    if currentPerson >= howMany:
-	    	break
 
 
 
