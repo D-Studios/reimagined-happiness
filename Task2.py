@@ -89,7 +89,7 @@ def main():
 	    	print(word)
 	    	wordBytes = word.encode('utf-8')
 	    	hashed_word = bcrypt.hashpw(wordBytes, hash_value[0:29])
-	    	if bcrypt.checkpw(wordBytes, hashed_word):
+	    	if bcrypt.checkpw(wordBytes, hash_value):
 	    		elapsed_time = time.time() - start_time
 	    		result = f"User: {user}, Password: {word}, Time taken: {elapsed_time:.4f} seconds (checkpw)"
 	    		print(result)
