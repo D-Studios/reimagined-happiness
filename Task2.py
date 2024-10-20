@@ -51,7 +51,7 @@ def main():
 	    shadow_split = shadow[j].split('$')
 	    shadow_split2 = shadow[j].split(":")
 	    user = shadow_split2[0]
-	    forHashPw = shadow_split2[1]
+	    forHashPw = shadow_split2[1].replace("\n","")
 	    algorithm = shadow_split[1]
 	    workFactor = shadow_split[2]
 	    saltAndHash = shadow_split[3]
@@ -84,12 +84,12 @@ def main():
     print("\n\n\n\n")
     print("--------------------")
     for user, hash_value in hashDict.items():
-	    start_time = time.time()    
+	    start_time = time.time()
 	    for word in filtered_words :
 	    	print(word)
 	    	wordBytes = word.encode('utf-8')
 	    	hashed_word = bcrypt.hashpw(wordBytes, hash_value[0:29])
-	    	if bcrypt.checkpw(hashed_word, hash_value):
+	    	if bcrypt.checkpw(wordBytes, hashed_word):
 	    		elapsed_time = time.time() - start_time
 	    		result = f"User: {user}, Password: {word}, Time taken: {elapsed_time:.4f} seconds (checkpw)"
 	    		print(result)
